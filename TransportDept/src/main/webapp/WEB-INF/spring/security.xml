@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+		 xmlns:b="http://www.springframework.org/schema/beans"		 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+			
+	<b:bean id="myUserDetailsService" class="com.me.transport.security.UserDetailsServiceImp"></b:bean>		
+	<b:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	<b:constructor-arg value="11"></b:constructor-arg>	
+	</b:bean>
+	<b:bean name="logindao" class="com.me.transport.dao.LoginDao" scope="singleton" />		
+		
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/" access="permitAll"/>		
+		<intercept-url pattern="/resources/**" access="permitAll"/>
+		<intercept-url pattern="/login.htm" access="permitAll"/>
+		<intercept-url pattern="/ajaxservice.htm" access="permitAll"/>
+		<intercept-url pattern="/registrationUser.htm" access="permitAll"/>
+		<intercept-url pattern="/registrationdot.htm" access="permitAll"/>
+		<intercept-url pattern="/registrationtp.htm" access="permitAll"/>
+		<intercept-url pattern="/newDOT" access="permitAll"/>
+		<intercept-url pattern="/newTp" access="permitAll"/>
+		<intercept-url pattern="/newUser" access="permitAll"/>
+		<intercept-url pattern="/vehiclehistory" access="permitAll"/>
+		<intercept-url pattern="/login" access="permitAll"/>		
+        <intercept-url pattern="/driverhome" access="hasRole('USER')" />
+        <intercept-url pattern="/policehome" access="hasRole('TP')" />
+        <intercept-url pattern="/dothome" access="hasRole('DOT')" />
+        <intercept-url pattern="/searchLP.htm" access="hasRole('TP')" />
+        <intercept-url pattern="/savefine" access="hasRole('TP')" />
+        <intercept-url pattern="/searchVehicle.htm" access="hasRole('TP')" />
+        <intercept-url pattern="/saveincident" access="hasRole('TP')" />
+        <intercept-url pattern="/addIncident" access="hasRole('TP')" />
+        <intercept-url pattern="/addfines" access="hasRole('TP')" />        
+        <intercept-url pattern="/licenseplates.htm" access="hasRole('USER')" />
+        <intercept-url pattern="/addLicensePlate.htm" access="hasRole('USER')" />
+        <intercept-url pattern="/saveLicensePlate" access="hasRole('USER')" />
+        <intercept-url pattern="/register.htm" access="hasRole('USER')" />
+        <intercept-url pattern="/addVehicle" access="hasRole('USER')" />
+        <intercept-url pattern="/saveVehicle" access="hasRole('USER')" />
+        <intercept-url pattern="/fines.htm" access="hasRole('USER')" />
+        <intercept-url pattern="/viewFines" access="hasRole('USER')" />
+        <intercept-url pattern="/payment.htm" access="hasRole('USER')" />
+        <intercept-url pattern="/paymentdone" access="hasRole('USER')" />
+        <intercept-url pattern="/notifications.htm" access="hasRole('TP')" />
+        <intercept-url pattern="/**" access="authenticated"/>                
+        <form-login 
+        login-page="/login.htm" 
+        default-target-url="/welcome"
+        login-processing-url="/login"
+        authentication-failure-url="/login.htm?error"
+        username-parameter="username"
+        password-parameter="password" 
+        always-use-default-target="false"            
+        />
+        <logout logout-url="/logout.htm"
+        delete-cookies="JSESSIONID" invalidate-session="true"
+        logout-success-url="/?logout"
+        />
+        <headers>        
+        <cache-control></cache-control>
+        </headers>
+        
+    </http>   
+    
+    	
+ 
+    <authentication-manager>
+        <authentication-provider user-service-ref="myUserDetailsService">
+            <password-encoder ref="passwordEncoder"></password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+    
+   
+    
+</b:beans>

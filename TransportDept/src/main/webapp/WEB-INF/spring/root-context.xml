@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->	
+	<bean name="incidentdao" class="com.me.transport.dao.IncidentDao" scope="singleton" />
+	<bean name="userRegistrationdao" class="com.me.transport.dao.UserRegistrationDao" scope="singleton" />	
+	<bean name="finesdao" class="com.me.transport.dao.FinesDao" scope="singleton" />
+	<bean name="licenseplatedao" class="com.me.transport.dao.LicensePlateDao" scope="singleton" />
+	<bean name="vehicledao" class="com.me.transport.dao.VehicleDao" scope="singleton" />
+	<bean name="logindao" class="com.me.transport.dao.LoginDao" scope="singleton" />
+</beans>
